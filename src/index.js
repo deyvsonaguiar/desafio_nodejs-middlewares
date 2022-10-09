@@ -22,11 +22,23 @@ function checksExistsUserAccount(request, response, next) {
   request.user = user
 
   return next()
-  
+
 }
 
 function checksCreateTodosUserAvailability(request, response, next) {
-  // Complete aqui
+  
+  const { user } = request;
+  const countTodos = user.todos.length
+
+  if (!user.pro && countTodos >= 10) {
+
+    return response.status(403).json({ error: 'Sorry, your plan Free is limited for 10 todos.' })
+
+  } 
+
+  return next()
+
+
 }
 
 function checksTodoExists(request, response, next) {
